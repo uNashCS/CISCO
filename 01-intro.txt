@@ -1,0 +1,11 @@
+# Inicio de Curso de CISCO el día 21/06/2021.
+
+# Introducción del uso del software Packet Tracer como la herramienta principal de la configuración de los diferentes routers y switches del mercado.
+
+# Se Visualiza la interfaz del Software Packet Tracer, ¿Cómo manejar el Software?,¿Agregar dispositivos?, ¿Cómo ejecutar la simulación de envíos de paquetes?, Diseño de una red usando imágenes para la mejora de ubicación de los puntos.
+
+Descarga del sofware Packer Tracer en este link: https://archive.org/download/packet-tracer-800-amd-64-build-212-final_202102/PacketTracer800_Build212_64bit_setup-signed.exe
+# En el caso de que le pida información de inicio de sesión, registrarse en la página de CISCO (NETACAD): https://www.netacad.com/
+# En el caso de no registrarse, es recomendable que inicie el software sin conexión a Internet para que no ejecute el inicio de sesión.
+
+Archivo 01-intro.pkt de la primera práctica
