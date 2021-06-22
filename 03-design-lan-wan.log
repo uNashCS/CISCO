@@ -1,0 +1,29 @@
+# Diseño de una red empresarial multicapa
+# Debemos categorizar según su tamaño
+# Tenemo redes pequeña y redes grandes, diferenciadas por el número de usuarios
+            Pequeña         200 host
+            Mediana         200 a 1000 hots
+            Grande más de   1000 hots
+
+# La red empresarial está formada por capa de acceso, capa de distribución y capa de núcleo.
+    CA: rack hasta el usuario
+        Conmutación de capa 2, alta disponibilidad (enlaces redundantes)
+        Seguridad de puertos
+        Clasificación y demarcación de QoS
+        ARP
+        Arbol de expansión (Para evitar bucle - switch raíz y puerto raiz)
+        
+    CD: Políticas de conectividad, ACL, capas de acceso y de núcleo. (Nucleo contraido - cuando la capa de sitrbición hace la función de nucleo y distribución)
+        Enlaces WAN y LAN (EtherChannel)
+        ACL y filtrado
+        Routing entre redes LAN y VLAN
+        Dominio de routing EIGRP - OSPF
+        redundancia y balanceo de carga.
+        Límite para sumarización y agregación de rutas.
+        Control de dominio de difusión. COmo punto de difución
+    CN: Proporciona transporte rápido entre los swtiches de distribución dentro del campus (Alta gama dependiendo de la red).
+        Conmutar transporte de alta velocidad.
+        Porporcionar confiabilidad a toleracia a fallas. (Reduncacia)
+        Escalabilidad con equipos más rápidos y no con más equipos.
+        Evitar manipulación de paquetes a causa de la seguridad. (Costo en CPU)
+# Agregar redundancia entre las diferentes capas, no solo dpender de un lugar acalizado.

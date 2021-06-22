@@ -1,0 +1,8 @@
+# Inicio de curso de GNS3
+
+# Lo principal es como cargar imágenes IOS para GNS3
+# Las imagenes más usadas son las de 3700 SWITCH capa 3 y router 7200, estas son las más utilizadas
+# También descargar y cargas Appliances desde la página de GNS3
+# Buscar img IOS confiables.
+
+# Para la carga de Imágenes IOS ir a -> EDIT->Preferences->IOS router
