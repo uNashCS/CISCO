@@ -1,0 +1,74 @@
+################## Configuración de los dispositivos en Packet Tracer ##################
+
+// Inciio de la CLI en Packet tracer por equipo.                
+
+Switch>enable                               // Para entrar a modo privilegiado
+Switch#
+       
+
+Switch#show interfaces                      // Muestra todas las interfaces y sus configuraciones/ broadcast, errores, IPs, máscaras
+
+Switch#show interfaces f0/1                 // Para observar la información de una sola interfaz
+
+Switch#conf ter                             // Entrar en modo de configuración
+
+Switch(config)#interface ?                  // Ayuda en la configuración de un comando
+  Dot11Radio        Dot11 interface
+  Ethernet          IEEE 802.3
+  FastEthernet      FastEthernet IEEE 802.3
+  GigabitEthernet   GigabitEthernet IEEE 802.3z
+  Loopback          Loopback interface
+  Port-channel      Ethernet Channel of interfaces
+  Serial            Serial
+  Tunnel            Tunnel interface
+  Virtual-Template  Virtual Template interface
+  Vlan              Catalyst Vlans
+  range             interface range command
+
+Switch(config)#hostname SW1                 // Cambio de nombre a la consola
+SW1(config)#                                // Nombre cambiado de Swith a SW1
+
+SW1(config)#banner motd "SOLO PERSONAL AUTORIZADO"      // Al inicio de la consola CLI para mostrar una banner como se muestra a continuación
+SOLO PERSONAL AUTORIZADO
+
+SW1(config)#enable secret cisco             // Configurar una contraseña al iniciar "enable"
+
+// Set de configuraciones para la configuración de contraseña en consola
+
+SW1(config)#line console 0                  // Ingresamos a config-line           
+SW1(config-line)#password cisco             // Configurar la contrseña
+SW1(config-line)#login                      // Cofngirución al inicio de la consola
+SW1(config-line)#exec-timeout 20            // Tiempo muerto
+SW1(config-line)#logging synchronous        // Despliega cualquiere item informacional en pantalla
+SW1(config-line)#exit                       // salir modo config-line
+SW1(config)#
+
+// Muestra de la configuración al inicio del CLI
+
+SOLO PERSONAL AUTORIZADO
+
+User Access Verification
+
+Password: 
+
+SW1>enable 
+Password: 
+SW1#
+
+SW1#show running-config                     // Muestra la configuracion en ejecución
+SW1#copy running-config startup-config      // Copia la configuración en ejecución a la configuración de inicio
+Destination filename [startup-config]? 
+Building configuration...
+
+SW1(config)#service password-encryption     // Encripta todas las contraseñas
+
+SW1#clock set 10:44:00 02 october 2020      // Configura hora manual
+SW1#show clock                              // Muestra la configuración de reloj establecida
+10:44:5.441 UTC Fri Oct 2 2020
+
+
+
+
+
+
+23/06/2021
