@@ -1,0 +1,36 @@
+################################ Configuraciones de VTY y VLAN en switch ################################
+
+Para la configuración remota de los equipos Switch se debe seguir los siguientes comandos
+
+// Configuración de una VLAN de acceso ADMIN en la interfaz f0/2
+Switch(config)#vlan 99
+Switch(config-vlan)#name ADMIN
+Switch(config-if)#exit
+
+Switch(config)#interface f0/2
+Switch(config-if)#switchport mode access 
+Switch(config-if)#switchport access vlan 99
+Switch(config-if)#exit
+
+// COnfiguración de una IP en la VLAN99 para acceso Telnet
+
+Switch(config)#interface vlan 99
+Switch(config-if)#ip address 192.168.0.2 255.255.255.0
+Switch(config-if)#no shutdown
+
+// Configuración de una ip gateway en caso de una conexión remota
+
+Switch(config)#ip default-gateway 192.168.0.1
+
+// Configuración de la clave en las lines VTY y encriptación del password
+
+Switch(config)#line vty 0 15
+Switch(config-line)#password cisco
+Switch(config-line)#login
+Switch(config-line)#logging synchronou
+Switch(config-line)#exec-timeout 20
+Switch(config-line)#exit
+Switch(config)#service password-encryption 
+
+// La configuración es la misma para el Router
+// Configurar la PC una ip dentro de la red. O acceso por consola (RS-232)
