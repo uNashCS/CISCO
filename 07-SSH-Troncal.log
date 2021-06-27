@@ -1,0 +1,38 @@
+################################ SSH, ACCESO TRONCAL ################################
+Configuración del Shell Seguro, configuración remota. Protocolo SSH
+
+Configuración VLAN y VTY del archivo 06-VTY-VLAN.log para el acceso del PC0-VLAN99, en los SW1_LAN
+
+// Configuración del troncla en SW1_LAN capa 2
+
+SW1_LAN(config)#interface f0/1
+SW1_LAN(config-if)#switchport mode trunk
+SW1_LAN(config-if)#switchport trunk allowed vlan 99
+
+
+// Configuración del troncal en SW_L3 capa 3
+
+SW_L3(config)#interface f0/1
+SW_L3(config-if)#switchport trunk encapsulation dot1q
+SW_L3(config-if)#switchport trunk allowed vlan 99
+SW_L3(config-if)#switchport mode trunk 
+
+// Configuración de SSH en SW_L3 capa 3 y SSH en SW1_LAN & SW2_LAN capa 2
+
+SW_L3(config)#ip domain-name cisco.com
+SW_L3(config)#crypto key generate rsa
+    The name for the keys will be: SW_L3.cisco.com
+    Choose the size of the key modulus in the range of 360 to 2048 for your
+    General Purpose Keys. Choosing a key modulus greater than 512 may take
+    a few minutes.
+
+    How many bits in the modulus [512]: 1024
+    % Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+
+SW_L3(config)#username somos password cisco
+SW_L3(config)#lin
+SW_L3(config)#line vty 0 15
+SW_L3(config-line)#transport input ssh
+SW_L3(config-line)#login local
+SW_L3(config-line)#exit
+SW_L3(config)#ip ssh version 2
