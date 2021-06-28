@@ -1,0 +1,48 @@
+####################  CONFIGURACIÓN DE DHCP SNOOPING ####################
+
+Ataque de denegación de servicios, cuando existe tráfico ilégitimo que obstruye el tráfico legítimo
+DCHP Snooping - usar servidores de dhcp falsos con el gotamiento del falsos
+
+Prácticas recomendadas
+
+Desarrollo de una polítia de seguridad
+Desactivar los servicios y puertos no usados
+Utilice contraseñas seguras
+Controle el acceso físico a los dispositivos
+Evite usar sitios web HTTP estándar inseguros
+Realizar copias de seguridad periodicamente
+Capacitar a los empleados de ingeniería social
+Cifrar y protejer contraseñas, datos confidenciales
+Firewall y ACL
+Mantener actualizados los software
+
+La configuración inicial se la realiza de los archivos 06-VTY-VLAN.log y 07-SSH-Troncal.log
+
+// Se apagan lo puertos que no se estén utilizando
+
+SW1_LAN_DHCP(config)#interface range f0/4-24
+SW1_LAN_DHCP(config-if-range)#sh
+
+// Se configura el DHCP-Snooping en el SW1_LAN_DHCP
+
+SW1_LAN_DHCP(config)#ip dhcp snooping                       // Activación del DHCP-Snooping
+SW1_LAN_DHCP(config)#ip dhcp snooping vlan 99               // La VLAN activadas para el DHCP-Snooping
+SW1_LAN_DHCP(config)#interface f0/1                         // Interfaz confiable, de donde proviene las petiones
+SW1_LAN_DHCP(config-if)#ip dhcp snooping trust              // Se activa la confiabilidad
+SW1_LAN_DHCP(config-if)#exit
+SW1_LAN_DHCP(config)#
+
+// Se configura el DHCP-Snooping en el SW2_LAN_DHCP
+
+SW2_LAN_DHCP(config)#interface f0/2                         // Se aplica el límite de peticiones DHCP en la interfaz - o de donde proceden las peticiones
+SW2_LAN_DHCP(config-if)#ip dhcp snooping limit rate 5       // Límite de 5
+SW2_LAN_DHCP(config-if)#exit
+SW2_LAN_DHCP(config)#
+
+SW2_LAN_DHCP(config)#ip dhcp snooping                       // se activa el DHCP-Snooping
+SW2_LAN_DHCP(config)#ip dhcp snooping vlan 99               // Se activa las VLAN
+SW2_LAN_DHCP(config)#interface f0/2                         // Interfaz confiable - Donde se conecta el SERVIDOR
+SW2_LAN_DHCP(config-if)#ip dhcp snooping trust
+SW2_LAN_DHCP(config-if)#exit
+SW2_LAN_DHCP(config)#
+
