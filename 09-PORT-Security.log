@@ -1,0 +1,130 @@
+########################## Seguridad de puertos ###########################
+Consiste configurar en los equipos capa 2, se limita el uso de puertos, asociando MAC al puerto, se restringe o se apaga cuando se viola las condiones
+
+// Configuraación inicial de los archivos 06-VTY-VLAN.log y 07-SSH-Troncal.log
+
+// Configuración de puerto de seguridad en SW1_PORT
+
+SW1_PORT(config)#interface r f0/1-24
+SW1_PORT(config-if-range)#switchport mode access
+SW1_PORT(config-if-range)#switchport access vlan 99
+SW1_PORT(config-if-range)#switchport port-security                              // Se activa el PORT-SECURITY
+SW1_PORT(config-if-range)#switchport port-security mac-address sticky           // Se configura el modo dinámico
+SW1_PORT(config-if-range)#switchport port-security maximum 1
+SW1_PORT(config-if-range)#switchport port-security violation restrict           // Se restringe cuando haya una violación de seguridad
+SW1_PORT(config-if-range)#exit
+SW1_PORT(config)#exit
+
+    ################## Show port-security ##################
+        SW1_PORT#show port-security address 
+                    Secure Mac Address Table
+        -------------------------------------------------------------------------------
+        Vlan	Mac Address	Type			Ports		Remaining Age
+                                        (mins)
+        ----	-----------	----			-----		-------------
+        99	0001.644B.E27D	SecureSticky		FastEthernet0/1		-
+        99	00D0.9741.5B6C	SecureSticky		FastEthernet0/2		-
+        ------------------------------------------------------------------------------
+        Total Addresses in System (excluding one mac per port)     : 0
+        Max Addresses limit in System (excluding one mac per port) : 1024
+
+
+    ################## show port-security interface f0/1 ##################
+    // Se muestra en la interfaz indicada la configuración de port-security y la violaciones de seguridad
+
+        SW1_PORT#show port-security interface f0/1
+        Port Security              : Enabled
+        Port Status                : Secure-up
+        Violation Mode             : Restrict
+        Aging Time                 : 0 mins
+        Aging Type                 : Absolute
+        SecureStatic Address Aging : Disabled
+        Maximum MAC Addresses      : 1
+        Total MAC Addresses        : 1
+        Configured MAC Addresses   : 0
+        Sticky MAC Addresses       : 1
+        Last Source Address:Vlan   : 0001.644B.E27D:99
+        Security Violation Count   : 0
+
+    // Se muestra en la interfaz indicada la configuración de port-security y la violaciones de seguridad y última mac que provocó la violación de seguridad
+
+        SW1_PORT#show port-security interface f0/1
+        Port Security              : Enabled
+        Port Status                : Secure-up
+        Violation Mode             : Restrict
+        Aging Time                 : 0 mins
+        Aging Type                 : Absolute
+        SecureStatic Address Aging : Disabled
+        Maximum MAC Addresses      : 1
+        Total MAC Addresses        : 1
+        Configured MAC Addresses   : 0
+        Sticky MAC Addresses       : 1
+        Last Source Address:Vlan   : 00D0.585A.410A:99
+        Security Violation Count   : 1
+    
+**************************** Configuración de puerto de seguridad en SW2_PORT ****************************
+
+SW2_PORT(config)#interface r f0/1-24
+SW2_PORT(config-if-range)#switchport mode access 
+SW2_PORT(config-if-range)#switchport access vlan 98
+SW2_PORT(config-if-range)#
+SW2_PORT(config-if-range)#switchport port-security mac-address sticky           // Se configura el modo dinámico
+SW2_PORT(config-if-range)#switchport port-security maximum 1                    // Máximo una mac soportada
+SW2_PORT(config-if-range)#switchport port-security violation shutdown           // Se apaga cuando haya una violación de seguridad
+SW2_PORT(config-if-range)#switchport port-security                              // Se activa el PORT-security
+SW2_PORT(config-if-range)#exit
+SW2_PORT(config)#
+
+    ################## Show port-security ##################
+    // Detecta por primera vez el mac address en el puerto
+
+        SW2_PORT#show port-security address 
+                    Secure Mac Address Table
+        -------------------------------------------------------------------------------
+        Vlan	Mac Address	Type			Ports		Remaining Age
+                                        (mins)
+        ----	-----------	----			-----		-------------
+        98	000C.8532.23A2	SecureSticky		FastEthernet0/1		-
+        98	00E0.A34B.461B	SecureSticky		FastEthernet0/2		-
+        ------------------------------------------------------------------------------
+        Total Addresses in System (excluding one mac per port)     : 0
+        Max Addresses limit in System (excluding one mac per port) : 1024
+
+    ################## show port-security interface f0/1 ##################
+    // Se muestra en la interfaz indicada la configuración de port-security y la violaciones de seguridad
+
+        SW2_PORT#show port-security interface f0/1
+
+        Port Security              : Enabled
+        Port Status                : Secure-up
+        Violation Mode             : Shutdown
+        Aging Time                 : 0 mins
+        Aging Type                 : Absolute
+        SecureStatic Address Aging : Disabled
+        Maximum MAC Addresses      : 1
+        Total MAC Addresses        : 1
+        Configured MAC Addresses   : 0
+        Sticky MAC Addresses       : 1
+        Last Source Address:Vlan   : 000C.8532.23A2:98
+        Security Violation Count   : 0
+    
+    
+    // Se muestra en la interfaz indicada la configuración de port-security y la violaciones de seguridad y última mac que provocó la violación de seguridad
+
+        SW2_PORT#show port-security interface f0/1
+        Port Security              : Enabled
+        Port Status                : Secure-shutdown
+        Violation Mode             : Shutdown
+        Aging Time                 : 0 mins
+        Aging Type                 : Absolute
+        SecureStatic Address Aging : Disabled
+        Maximum MAC Addresses      : 1
+        Total MAC Addresses        : 1
+        Configured MAC Addresses   : 0
+        Sticky MAC Addresses       : 1
+        Last Source Address:Vlan   : 000D.BD05.02C8:98
+        Security Violation Count   : 1
+
+// Para volver a inicar el puerto donde se activó el apagado, ejecutar:
+SW2_PORT(config-if)#shutdown
+SW2_PORT(config-if)#no shutdown
