@@ -1,0 +1,76 @@
+# Ejercicio de configuración de múltiples VLAN y troncales
+
+SW1_LAN_Capa2(config)#vlan 10
+SW1_LAN_Capa2(config-vlan)#name ADMIN
+SW1_LAN_Capa2(config-vlan)#exit
+SW1_LAN_Capa2(config)#vla
+SW1_LAN_Capa2(config)#vlan 11
+SW1_LAN_Capa2(config-vlan)#name BIBLIO
+SW1_LAN_Capa2(config-vlan)#exit
+SW1_LAN_Capa2(config)#vl
+SW1_LAN_Capa2(config)#vlan 12
+SW1_LAN_Capa2(config-vlan)#name FICA
+SW1_LAN_Capa2(config-vlan)#exit
+SW1_LAN_Capa2(config)#
+
+SW1_LAN_Capa2(config)#interface f0/2
+SW1_LAN_Capa2(config-if)#switchport mode access 
+SW1_LAN_Capa2(config-if)#switchport access vlan 10
+SW1_LAN_Capa2(config-if)#exit
+
+SW1_LAN_Capa2(config)#interface f0/3
+SW1_LAN_Capa2(config-if)#switchport mode access
+SW1_LAN_Capa2(config-if)#switchport access vlan 11
+SW1_LAN_Capa2(config-if)#exit
+
+SW1_LAN_Capa2(config)#interface f0/4
+SW1_LAN_Capa2(config-if)#sw
+SW1_LAN_Capa2(config-if)#switchport mode access
+SW1_LAN_Capa2(config-if)#switchport access vlan 12
+SW1_LAN_Capa2(config-if)#exit
+SW1_LAN_Capa2(config)#
+
+
+SW2_LAN_Capa2(config)#vlan 10
+SW2_LAN_Capa2(config-vlan)#name ADMIN
+SW2_LAN_Capa2(config-vlan)#exit
+SW2_LAN_Capa2(config)#vlan 11
+SW2_LAN_Capa2(config-vlan)#name BIBLIO
+SW2_LAN_Capa2(config-vlan)#exit
+SW2_LAN_Capa2(config)#vlan 12
+SW2_LAN_Capa2(config-vlan)#name FICA
+SW2_LAN_Capa2(config-vlan)#exit
+
+SW2_LAN_Capa2(config)#interface f0/2
+SW2_LAN_Capa2(config-if)#switchport mode access 
+SW2_LAN_Capa2(config-if)#switchport access vlan 10
+SW2_LAN_Capa2(config-if)#exit
+
+SW2_LAN_Capa2(config)#inter f0/3
+SW2_LAN_Capa2(config-if)#switchport mode access 
+SW2_LAN_Capa2(config-if)#switchport access vlan 11
+SW2_LAN_Capa2(config-if)#exit
+
+SW2_LAN_Capa2(config)#interface F0/4
+SW2_LAN_Capa2(config-if)#SWitchport Mode ACcess 
+SW2_LAN_Capa2(config-if)#switchport access vlan 12
+SW2_LAN_Capa2(config-if)#exit
+
+
+
+SW_Capa3(config)#vlan 10
+SW_Capa3(config-vlan)#name ADMIN
+SW_Capa3(config-vlan)#exit
+SW_Capa3(config)#vlan 11
+SW_Capa3(config-vlan)#name BIBLIO
+SW_Capa3(config-vlan)#exit
+SW_Capa3(config)#vlan 12
+SW_Capa3(config-vlan)#name FICA
+SW_Capa3(config-vlan)#exit
+
+SW_Capa3(config)#interface r f0/1-2
+SW_Capa3(config-if-range)#switchport trunk encapsulation dot1q
+SW_Capa3(config-if-range)#switchport mode trunk
+SW_Capa3(config-if-range)#switchport trunk allowed vlan 10,11,12
+SW_Capa3(config-if-range)#exit
+SW_Capa3(config)#
