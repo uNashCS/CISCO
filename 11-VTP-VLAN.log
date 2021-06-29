@@ -1,0 +1,65 @@
+# Confiuración de VLAN y VTP en los switch capa 2 y capa 3
+
+Configuración incial en el archivo 06-VTY-VLAN.log y 07-SSH-Troncal.log
+
+// Se configura las VLANs en el VTP Server
+
+Switch(config)#vlan 100
+Switch(config-vlan)#name ADMIN
+Switch(config-vlan)#exit
+Switch(config)#vlan 101
+Switch(config-vlan)#name FICA
+Switch(config-vlan)#exit
+Switch(config)#vlan 102
+Switch(config-vlan)#name FECYT
+Switch(config-vlan)#exit
+Switch(config)#vlan 103
+Switch(config-vlan)#name FICAYA
+Switch(config-vlan)#exit
+
+//Configuración del VTP Server y su dominio
+
+Switch(config)#vtp mode server
+Switch(config)#vtp domain somos.com
+
+// Configuración de las troncales en int r y la vlan nativa
+
+Switch(config)#interface r f0/1-4
+Switch(config-if-range)#switchport trunk encapsulation dot1q 
+Switch(config-if-range)#switchport mode trunk 
+Switch(config-if-range)#switchport trunk allowed vlan 100,101,102,103
+Switch(config-if-range)#switchport trunk native v 1
+Switch(config-if-range)#EXIT
+
+// Configuración de ip gateway en las VLANs
+
+Switch(config)#interface vlan 100
+Switch(config-if)#ip address 192.168.100.1 255.255.255.0
+Switch(config-if)#description VLA100
+Switch(config)#interface vlan 101
+Switch(config-if)#ip address 192.168.101.1 255.255.255.0
+Switch(config-if)#description VLAN101
+Switch(config-if)#exit
+Switch(config)#interface vlan 102
+Switch(config-if)#ip address 192.168.102.1 255.255.255.0
+Switch(config-if)#description VLAN102
+Switch(config-if)#exit
+Switch(config)#interface vlan 103
+Switch(config-if)#ip address 192.168.103.1 255.255.255.0
+Switch(config-if)#description VLAN103
+Switch(config-if)#exit
+
+// Activar la opción de ruteo en el SWitch de Capa 3
+
+Switch(config)#ip routing
+
+
+// Configuración del VTP Client y Acceso de VLAN en el puerto - Se lo hace para todos loswitch de acceso con las VLANs que configure
+
+Switch(config)#vtp mode client 
+        Setting device to VTP CLIENT mode.
+Switch(config)#vtp domain somos.com
+Switch(config)#interface f0/2
+Switch(config-if)#switchport mode access 
+Switch(config-if)#switchport access vlan 101
+Switch(config)#
