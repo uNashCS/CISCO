@@ -1,0 +1,25 @@
+# >Configuración de enrutamiento entre VLANs con uso de Router
+
+// Configuración incial del archivo 06-VTY-VLAN.log y 07-SSH-Troncal.log
+
+// Configuración de las SUBInterfaces en el router
+
+Router(config)#interface f0/1                                       // Se activa las interfaces
+Router(config-if)#no shutdown 
+Router(config)#interface f0/0
+Router(config-if)#no shutdown 
+
+Router(config-if)#inter f0/0.100                                    // el .100 es número cualquiera, se puede utilizar uno ya diseñado o el núermo de la VLAN como es el caso
+Router(config-subif)#encapsulation dot1Q 100                        // Habilitar el protocolo dt1Q
+Router(config-subif)#ip address 192.168.100.1 255.255.255.0
+Router(config-subif)#exit
+
+Router(config)#inter f0/0.101
+Router(config-subif)#encapsulation dot1Q 101
+Router(config-subif)#ip address 192.168.101.1 255.255.255.0
+Router(config-subif)#exit
+
+Router(config)#interface f0/1.200
+Router(config-subif)#encapsulation dot1Q 200
+Router(config-subif)#ip address 192.168.200.1 255.255.255.0
+Router(config-subif)#exit
