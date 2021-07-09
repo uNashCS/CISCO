@@ -1,0 +1,38 @@
+##################### Configuración de DHCP #####################
+
+Configuración previa de los archivos. 06-VTY-VLAN.log - 07-SSH-Troncal.log - 09-PORT-Security.log - 11-VTP-VLAN.log
+
+//Se configura el DHCP en el Switch Central - Ejemplo en el arhivo 13-DHCP.pkt
+
+//Se configura un DHCP Pool con la respectiva network de la VLAN se cofngira el Gateway como el DNS
+
+SW_Centrol(config)#ip dhcp pool DHCPVlan69
+SW_Centrol(dhcp-config)#network 192.168.69.0 255.255.255.0
+SW_Centrol(dhcp-config)#default-router 192.168.69.1
+SW_Centrol(dhcp-config)#dns-server 8.8.8.8
+SW_Centrol(dhcp-config)#exit
+SW_Centrol(config)#
+SW_Centrol(config)#ip dhcp pool DHCPVlan100
+SW_Centrol(dhcp-config)#network 192.168.100.0 255.255.255.0
+SW_Centrol(dhcp-config)#default-router 192.168.100.1
+SW_Centrol(dhcp-config)#dns-server 8.8.8.8
+SW_Centrol(dhcp-config)#exit
+SW_Centrol(config)#
+SW_Centrol(config)#ip dhcp pool DHCPVlan101
+SW_Centrol(dhcp-config)#network 192.168.101.0 255.255.255.0
+SW_Centrol(dhcp-config)#default-router 192.168.101.1
+SW_Centrol(dhcp-config)#dns-server 8.8.8.8
+SW_Centrol(dhcp-config)#exit
+SW_Centrol(config)#
+SW_Centrol(config)#ip dhcp pool DHCPVlan102
+SW_Centrol(dhcp-config)#network 192.168.102.0 255.255.255.0
+SW_Centrol(dhcp-config)#default-router 192.168.102.1
+SW_Centrol(dhcp-config)#dns-server 8.8.8.8
+SW_Centrol(dhcp-config)#exit
+SW_Centrol(config)#
+
+SW_Centrol(config)#ip dhcp excluded-address 192.168.100.10
+SW_Centrol(config)#ip dhcp excluded-address 192.168.101.10
+SW_Centrol(config)#ip dhcp excluded-address 192.168.102.10
+SW_Centrol(config)#ip dhcp excluded-address 192.168.69.10
+SW_Centrol(config)#ip dhcp excluded-address 192.168.69.10 192.168.69.100
