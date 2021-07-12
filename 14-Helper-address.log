@@ -1,0 +1,37 @@
+######################### Configuración del Helper-address para una red remota #########################
+
+Configuración previa de los archivos. 06-VTY-VLAN.log - 07-SSH-Troncal.log - 09-PORT-Security.log -  11-VTP-VLAN.log - 12-E-VLAN.log - 13-DHCP.log
+
+----------------- Configuración del R_Core y Swtich - Enlace con el Swtich de capa 3 -----------------
+
+// Se asigna la ip de enlace en la interfaz de enlace
+
+R_Core(config)#interface f0/0
+R_Core(config-if)#ip add
+R_Core(config-if)#ip address 10.0.0.1 255.255.255.252
+R_Core(config-if)#exit
+
+// Se configura la interfaz como enlace y no switchport y se el asigna la ip de enlace
+
+SW_LAN_Local(config)#interface f0/1
+SW_LAN_Local(config-if)#no sw
+SW_LAN_Local(config-if)#no switchport 
+SW_LAN_Local(config-if)#ip ad
+SW_LAN_Local(config-if)#ip address 10.0.0.2 255.255.255.252
+SW_LAN_Local(config-if)#
+
+
+----------------- Configuración de la ruta para la salida de las redes -----------------
+
+// En el Switch
+
+SW_LAN_Local(config)#ip route 0.0.0.0 0.0.0.0 10.0.0.1                               // Se configura las redes y a que ip es el siguiente salto
+
+// En el router
+
+R_Core(config)#ip route 0.0.0.0 0.0.0.0 10.0.0.2                                    // Se configura las redes y a que ip es el siguiente salto
+
+Configuración del Helper-address en la subinterfaz de la red remota
+
+R_Core(config)#interface f0/1.30                                                    // Interfaz conectada a la red que queremos dar la asistencia
+R_Core(config-subif)#ip helper-address 192.168.40.1                                 // Ip de mi servidor DHCP
