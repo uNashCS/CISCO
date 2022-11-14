@@ -1,0 +1,19 @@
+######################### Configuración de enlaces de agregación en una red #########################
+Configuración previa de los archivos. 06-VTY-VLAN.log - 07-SSH-Troncal.log - 09-PORT-Security.log -  11-VTP-VLAN.log - 12-E-VLAN.log - 13-DHCP.log
+
+Los enlaces de agregación permiten configurar enlaces de balanceo de carga, de mac origen a mac destino, y trabaja
+,muy bien con Spanning Tree, se realiza en cada grupo y no por interfaz, trabaja entre switchhs o servidores y switch.
+
+No se puede asigar dos interfaces diferentes, en cambio huawei si.. Ancho de banda full duplex total de 8 enlaces.
+
+----------------- Configuración Grupos etherchannel 3 -----------------
+
+// Se asigna grupo etherchannel para los interfaces seleccionadas
+
+Switch(config)#interface range gigabitEthernet 1/0/7-8
+Switch(config-if-range)#channel-group 1 mode active
+
+----------------- Verificacion de la congiguracion -----------------
+
+Switch#show  interfaces port-channel 1
+Switch#show etherchannel summary
